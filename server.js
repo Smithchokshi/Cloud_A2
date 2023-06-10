@@ -20,7 +20,7 @@ const computeandstorage = grpcObj.computeandstorage;
 function main() {
     const server = getServer()
 
-    server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(),
+    server.bindAsync(`3.83.157.131:${PORT}`, grpc.ServerCredentials.createInsecure(),
         (err,port) => {
         if (err) {
             console.log(err);
