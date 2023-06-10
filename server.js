@@ -2,7 +2,7 @@ const path = require('path')
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const PORT = 8082;
+const PORT = 50051;
 const protofile = './proto/computeandstorage.proto';
 
 const packageDef = protoLoader.loadSync(path.resolve(__dirname, protofile), {
@@ -20,7 +20,7 @@ const computeandstorage = grpcObj.computeandstorage;
 function main() {
     const server = getServer()
 
-    server.bindAsync(`3.83.157.131:${PORT}`, grpc.ServerCredentials.createInsecure(),
+    server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(),
         (err,port) => {
         if (err) {
             console.log(err);
