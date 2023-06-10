@@ -2,7 +2,7 @@ const path = require('path')
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const PORT = 0;
+const PORT = 8082;
 const protofile = './proto/computeandstorage.proto';
 
 const packageDef = protoLoader.loadSync(path.resolve(__dirname, protofile), {
