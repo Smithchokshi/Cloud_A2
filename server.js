@@ -112,6 +112,29 @@ const handleAppendData = (resData) => {
     }
 }
 
+const handleDelete = () => {
+    try {
+
+        const fileName = 'file.txt';
+
+        const deleteParams = {
+            Bucket: bucketName,
+            Key: fileName,
+        };
+
+        s3.deleteObject(deleteParams, (err, data) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log('File deleted successfully');
+            }
+        });
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 function getServer() {
     const server = new grpc.Server();
     server.addService(computeandstorage.EC2Operations.service, {
