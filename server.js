@@ -82,7 +82,7 @@ function getServer() {
             const url = handleStoreData(req.request.data);
 
             const response = {
-                s3uri: url,
+                s3uri: url
             };
 
             res(null, response);
