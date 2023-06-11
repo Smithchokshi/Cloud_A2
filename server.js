@@ -80,10 +80,11 @@ function getServer() {
     server.addService(computeandstorage.EC2Operations.service, {
         "StoreData": (req, res) => {
             const url = handleStoreData(req.request.data);
+
             const response = {
-                s3uri: url
-            }
-            res({ s3uri: url});
+                s3uri: url,
+            };
+            res(null, response);
         },
         "AppendData": (req, res) => {
             console.log(req.request);
