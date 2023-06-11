@@ -85,7 +85,7 @@ function getServer() {
                 s3uri: url,
             };
 
-            res(null, url);
+            res(null, response);
         },
         "AppendData": (req, res) => {
             console.log(req.request);
