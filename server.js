@@ -14,6 +14,7 @@ const credentials = new AWS.Credentials({
 })
 
 const s3 = new AWS.S3({ credentials });
+const bucketName = "csci5409-a2-b00923763"
 
 
 const packageDef = protoLoader.loadSync(path.resolve(__dirname, protofile), {
@@ -42,11 +43,40 @@ function main() {
         })
 }
 
+const handleStoreData = (data) => {
+    try {
+        const fileName = 'file.txt';
+
+        s3.getObject({ Bucket: bucketName, Key: fileName }, (err, data) => {
+            if (err) {
+                console.error(err);
+            } else {
+                const uploadParams = {
+                    Bucket: bucketName,
+                    Key: fileName,
+                    Body: data
+                };
+
+                s3.putObject(uploadParams, (err, data) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log('Data added to the file successfully');
+                    }
+                });
+            }
+        });
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 function getServer() {
     const server = new grpc.Server();
     server.addService(computeandstorage.EC2Operations.service, {
         "StoreData": (req, res) => {
-            console.log(req.request.data);
+            handleStoreData(req.request.data);
         },
         "AppendData": () => {
 
