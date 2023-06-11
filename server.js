@@ -156,6 +156,11 @@ function getServer() {
         },
         "DeleteFile": (req, res) => {
             handleDelete();
+            const response = {
+                s3uri: 'https://csci5409-a2-b00923763.s3.amazonaws.com/file.txt'
+            };
+
+            res(null, response);
         }
     })
 
