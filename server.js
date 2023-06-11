@@ -84,10 +84,10 @@ function getServer() {
 
 
             const response = {
-            data: {
                 s3uri: url
-            }
             };
+
+            console.log(response)
 
             res(null, response);
         },
