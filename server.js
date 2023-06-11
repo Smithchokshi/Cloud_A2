@@ -155,7 +155,7 @@ function getServer() {
             res(null, response);
         },
         "DeleteFile": (req, res) => {
-            console.log(req.request);
+            handleDelete();
         }
     })
 
