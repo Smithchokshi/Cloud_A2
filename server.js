@@ -75,27 +75,63 @@ const handleStoreData = (resData) => {
     }
 }
 
+const handleAppendData = (resData) => {
+    try {
+        const fileName = 'file.txt';
+        let url = '';
+
+        s3.getObject({ Bucket: bucketName, Key: fileName }, (err, data) => {
+            if (err) {
+                console.error(err);
+            } else {
+
+                const existingData = data.Body.toString(); // Assuming the file contains text
+                const newData = existingData + `\n${resData}`;
+
+                const uploadParams = {
+                    Bucket: bucketName,
+                    Key: fileName,
+                    Body: Buffer.from(`${newData}`, 'utf-8')
+                };
+
+                s3.putObject(uploadParams, (err) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log('Data added to the file successfully');
+                        url = 'https://csci5409-a2-b00923763.s3.amazonaws.com/file.txt';
+                    }
+                });
+            }
+        });
+        return url;
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 function getServer() {
     const server = new grpc.Server();
     server.addService(computeandstorage.EC2Operations.service, {
         "StoreData": (req, res) => {
-            const url = handleStoreData(req.request.data);
-
-
-
+            handleStoreData(req.request.data);
             const response = {
                 s3uri: 'https://csci5409-a2-b00923763.s3.amazonaws.com/file.txt'
             };
 
-            console.log(response)
-
             res(null, response);
         },
         "AppendData": (req, res) => {
-            console.log(req.request);
-        },
-        "DeleteFile": () => {
+            handleAppendData(req.request.data);
+            const response = {
+                s3uri: 'https://csci5409-a2-b00923763.s3.amazonaws.com/file.txt'
+            };
 
+            res(null, response);
+        },
+        "DeleteFile": (req, res) => {
+            console.log(req.request);
         }
     })
 
