@@ -76,7 +76,7 @@ function getServer() {
     const server = new grpc.Server();
     server.addService(computeandstorage.EC2Operations.service, {
         "StoreData": (req, res) => {
-            handleStoreData(req.request.data);
+            handleStoreData(req.request.data.toString());
         },
         "AppendData": () => {
 
