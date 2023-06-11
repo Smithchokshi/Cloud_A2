@@ -56,7 +56,7 @@ const handleStoreData = (resData) => {
                 const uploadParams = {
                     Bucket: bucketName,
                     Key: fileName,
-                    Body: resData.toString()
+                    Body: Buffer.from(`${resData}`, 'utf-8')
                 };
 
                 s3.putObject(uploadParams, (err) => {
@@ -92,7 +92,7 @@ const handleAppendData = (resData) => {
                 const uploadParams = {
                     Bucket: bucketName,
                     Key: fileName,
-                    Body: newData.toString()
+                    Body: Buffer.from(`${newData}`, 'utf-8')
                 };
 
                 s3.putObject(uploadParams, (err) => {
