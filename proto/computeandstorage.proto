@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/any.proto";
-
 package computeandstorage;
 
 service EC2Operations {
@@ -11,7 +9,7 @@ service EC2Operations {
 }
 
 message StoreRequest {
-  google.protobuf.Any json_response = 1;
+  string data = 1;
 }
 message StoreReply {
   string s3uri = 1;

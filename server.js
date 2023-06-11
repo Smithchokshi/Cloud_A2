@@ -2,7 +2,6 @@ const path = require('path')
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const AWS = require('aws-sdk');
-const { Any } = require('google-protobuf/google/protobuf/any_pb');
 
 
 const PORT = 50051;
@@ -82,15 +81,14 @@ function getServer() {
         "StoreData": (req, res) => {
             const url = handleStoreData(req.request.data);
 
-            const jsonResponse = JSON.stringify({ s3uri: url });
-
-            const anyResponse = new Any();
-            anyResponse.pack(jsonResponse, 'type.googleapis.com/google.protobuf.StringValue');
-
             const response = {
-                s3uri: anyResponse,
+                s3uri: url,
             };
-            res(null, response);
+
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 200;
+
+            res.end(null, JSON.stringify(response));
         },
         "AppendData": (req, res) => {
             console.log(req.request);
