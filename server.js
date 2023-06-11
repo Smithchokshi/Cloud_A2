@@ -53,13 +53,10 @@ const handleStoreData = (resData) => {
                 console.error(err);
             } else {
 
-                const existingData = data.Body.toString(); // Assuming the file contains text
-                const newData = existingData.replace(existingData, resData);
-
                 const uploadParams = {
                     Bucket: bucketName,
                     Key: fileName,
-                    Body: Buffer.from(`${newData}`, 'utf-8')
+                    Body: resData.toString()
                 };
 
                 s3.putObject(uploadParams, (err) => {
