@@ -84,7 +84,7 @@ function getServer() {
 
 
             const response = {
-                s3uri: url
+                s3uri: 'https://csci5409-a2-b00923763.s3.amazonaws.com/file.txt'
             };
 
             console.log(response)
