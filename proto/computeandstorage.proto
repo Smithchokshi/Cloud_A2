@@ -9,7 +9,7 @@ service EC2Operations {
 }
 
 message StoreRequest {
-  string data = 1;
+  string s3uri = 1;
 }
 message StoreReply {
   string s3uri = 1;
