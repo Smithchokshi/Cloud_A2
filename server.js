@@ -43,7 +43,7 @@ function main() {
         })
 }
 
-const handleStoreData = (data) => {
+const handleStoreData = (resData) => {
     try {
         const fileName = 'file.txt';
 
@@ -54,10 +54,10 @@ const handleStoreData = (data) => {
                 const uploadParams = {
                     Bucket: bucketName,
                     Key: fileName,
-                    Body: data
+                    Body: Buffer.from(`${resData}`, 'utf-8')
                 };
 
-                s3.putObject(uploadParams, (err, data) => {
+                s3.putObject(uploadParams, (err) => {
                     if (err) {
                         console.error(err);
                     } else {
@@ -76,7 +76,7 @@ function getServer() {
     const server = new grpc.Server();
     server.addService(computeandstorage.EC2Operations.service, {
         "StoreData": (req, res) => {
-            handleStoreData(req.request.data.toString());
+            handleStoreData(req.request.data);
         },
         "AppendData": () => {
 
