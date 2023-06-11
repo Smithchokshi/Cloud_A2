@@ -46,6 +46,7 @@ function main() {
 const handleStoreData = (resData) => {
     try {
         const fileName = 'file.txt';
+        let url = '';
 
         s3.getObject({ Bucket: bucketName, Key: fileName }, (err, data) => {
             if (err) {
@@ -62,10 +63,12 @@ const handleStoreData = (resData) => {
                         console.error(err);
                     } else {
                         console.log('Data added to the file successfully');
+                        url = 'https://csci5409-a2-b00923763.s3.amazonaws.com/file.txt';
                     }
                 });
             }
         });
+        return url;
 
     } catch (e) {
         console.log(e)
@@ -76,10 +79,14 @@ function getServer() {
     const server = new grpc.Server();
     server.addService(computeandstorage.EC2Operations.service, {
         "StoreData": (req, res) => {
-            handleStoreData(req.request.data);
+            const url = handleStoreData(req.request.data);
+            const response = {
+                s3uri: url
+            }
+            res(null, response);
         },
-        "AppendData": () => {
-
+        "AppendData": (req, res) => {
+            console.log(req.request);
         },
         "DeleteFile": () => {
 
