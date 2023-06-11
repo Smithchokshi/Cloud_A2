@@ -87,12 +87,12 @@ const handleAppendData = (resData) => {
             } else {
 
                 const existingData = data.Body.toString(); // Assuming the file contains text
-                const newData = existingData + `\n${resData}`;
+                const newData = existingData + resData;
 
                 const uploadParams = {
                     Bucket: bucketName,
                     Key: fileName,
-                    Body: Buffer.from(`${newData}`, 'utf-8')
+                    Body: newData.toString()
                 };
 
                 s3.putObject(uploadParams, (err) => {
