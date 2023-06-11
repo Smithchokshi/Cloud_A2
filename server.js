@@ -85,9 +85,6 @@ function getServer() {
                 s3uri: url,
             };
 
-            res.setHeader('Content-Type', 'application/json');
-            res.statusCode = 200;
-
             res.end(null, JSON.stringify(response));
         },
         "AppendData": (req, res) => {
