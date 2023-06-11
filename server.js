@@ -81,8 +81,12 @@ function getServer() {
         "StoreData": (req, res) => {
             const url = handleStoreData(req.request.data);
 
+
+
             const response = {
+            data: {
                 s3uri: url
+            }
             };
 
             res(null, response);
